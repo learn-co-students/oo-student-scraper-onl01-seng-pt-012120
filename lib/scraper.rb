@@ -42,15 +42,23 @@ class Scraper
     profile_hash = {}
     
     # SOCIAL MEDIA ======================
-    doc.css('.social-icon-container').children.each do |social|
-      binding.pry
-      social_media = social.children[1].search('.social-icon')[0].attributes['src'].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
-      social_url = social.children.css("a")[0].attributes['href'].value
-      if social_media == 'rss'
-        profile_hash[:blog] = social_url
-      else
-        profile_hash[social_media] = social_url
+    doc.css('.social-icon-container').each do |social|
+      social.children.each_with_index do |child, i|
+        if i % 2 != 0
+          # binding.pry
+          social_url = child.attributes['href'].value
+          social_media = child.children[0].attributes['src'].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
+          if social_media == 'rss'
+            profile_hash[:blog] = social_url
+          else
+            profile_hash[social_media] = social_url
+          end
+          binding.pry
+        end
       end
+      social_media = social.children[1].search('.social-icon')[0].attributes['src'].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
+      # social_url = social.children.css("a")[0].attributes['href'].value
+
     end
     
     # PROFILE QUOTE =============================
