@@ -28,25 +28,36 @@ class Scraper
     end
     student_arr
   end
-  
+
   # url:          doc.search('.social-icon-container')[0].children.css("a")[0].attributes['href'].value
   # social-asset: doc.search('.social-icon-container')[0].children.css(".social-icon")[0].attributes["src"].value
   # "../assets/img/twitter-icon.png".split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join
-  
+
+# social.children.children.first.attributes['src'].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join
 
   def self.scrape_profile_page(profile_url)
     doc = Nokogiri::HTML(open(profile_url))
     # binding.pry
     # doc.search
-    social_hash = {}
-    doc.search('.social-icon-container')[0].each do |social|
+    profile_hash = {}
+    
+    # SOCIAL MEDIA ======================
+    doc.css('.social-icon-container').children.each do |social|
       binding.pry
-      social_media = social.children.css(".social-icon")[0].attributes["src"].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
+      social_media = social.children[1].search('.social-icon')[0].attributes['src'].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
       social_url = social.children.css("a")[0].attributes['href'].value
-      social_hash[social_media] = social_url
+      if social_media == 'rss'
+        profile_hash[:blog] = social_url
+      else
+        profile_hash[social_media] = social_url
+      end
     end
-    social_hash
+    
+    # PROFILE QUOTE =============================
+    profile_hash[:profile_quote] = doc.search(".profile-quote").text
+    
+    # FINAL RETURNED HASH =======================
+    profile_hash
   end
 
 end
-
