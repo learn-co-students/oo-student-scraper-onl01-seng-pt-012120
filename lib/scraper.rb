@@ -38,9 +38,14 @@ class Scraper
     doc = Nokogiri::HTML(open(profile_url))
     # binding.pry
     # doc.search
-    doc.search('.social-icon-container') do |social|
+    social_hash = {}
+    doc.search('.social-icon-container')[0].each do |social|
       binding.pry
+      social_media = social.children.css(".social-icon")[0].attributes["src"].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
+      social_url = social.children.css("a")[0].attributes['href'].value
+      social_hash[social_media] = social_url
     end
+    social_hash
   end
 
 end
