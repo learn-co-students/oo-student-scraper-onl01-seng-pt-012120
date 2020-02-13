@@ -53,11 +53,10 @@ class Scraper
           else
             profile_hash[social_media] = social_url
           end
-          binding.pry
+          
         end
       end
-      social_media = social.children[1].search('.social-icon')[0].attributes['src'].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
-      # social_url = social.children.css("a")[0].attributes['href'].value
+      binding.pry
 
     end
     
