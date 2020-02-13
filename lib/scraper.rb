@@ -48,22 +48,24 @@ class Scraper
           # binding.pry
           social_url = child.attributes['href'].value
           social_media = child.children[0].attributes['src'].value.split(Regexp.union("../assets/img/","-icon.png")).reject(&:empty?).join.to_sym
-          if social_media == 'rss'
+          if social_media == :rss
             profile_hash[:blog] = social_url
           else
             profile_hash[social_media] = social_url
           end
-          
         end
       end
-      binding.pry
-
     end
     
     # PROFILE QUOTE =============================
     profile_hash[:profile_quote] = doc.search(".profile-quote").text
     
+    # BIO PULL ==================================
+    # binding.pry
+    profile_hash[:bio] = doc.css('.description-holder p').text
+    
     # FINAL RETURNED HASH =======================
+    # binding.pry
     profile_hash
   end
 
