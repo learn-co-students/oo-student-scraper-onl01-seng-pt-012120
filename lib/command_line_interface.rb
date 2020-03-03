@@ -1,7 +1,8 @@
 require_relative "../lib/scraper.rb"
 require_relative "../lib/student.rb"
 require 'nokogiri'
-require 'colorize'
+require 'colorize' #returns strings of possible colors EX: "I am now red.red"
+#why are we using colorize here?
 
 class CommandLineInterface
   BASE_PATH = "https://learn-co-curriculum.github.io/student-scraper-test-page/"
