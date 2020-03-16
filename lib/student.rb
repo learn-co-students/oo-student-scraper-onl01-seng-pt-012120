@@ -4,7 +4,7 @@ class Student
 
   @@all = []
 
-  def initialize(student_hash) #looping through students and and adding attributes to individual students
+  def initialize(student_hash) #looping through students and adding attributes to individual students
     student_hash.each do |attribute, value|
       self.send("#{attribute}=", value) #assigns newly created student attributes key value pairs using send
     end
