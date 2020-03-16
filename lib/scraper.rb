@@ -8,8 +8,7 @@ class Scraper
   #location: doc.css(".card-text-container p").text
 
   def self.scrape_index_page(index_url)
-    html = open(index_url)
-    doc = Nokogiri::HTML(html)
+    doc = Nokogiri::HTML(open(index_url))
     student_cards = []
     
   
