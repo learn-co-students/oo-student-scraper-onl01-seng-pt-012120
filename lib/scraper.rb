@@ -14,14 +14,14 @@ class Scraper
     
   
   doc.css("div.roster-cards-container").each do |project|
-   project.css(".student-card a").each do |student|
+  project.css(".student-card a").each do |student|
     
-     student_link = "#{student.attr('href')}"
-     student_name = student.css('.student-name').text
-     student_location = student.css('.student-location').text
+    student_link = "#{student.attr('href')}"
+    student_name = student.css('.student-name').text
+    student_location = student.css('.student-location').text
      
-     student_cards << {:name => student_name, :location => student_location, :profile_url => student_link}
-   end
+    student_cards << {:name => student_name, :location => student_location, :profile_url => student_link}
+  end
   
   end
     #return the student_cards hash
@@ -52,4 +52,5 @@ class Scraper
   end
 
 end
+
 
